@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/cover"
+        android:src="@drawable/cover"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/edit_username" />
+
+    <EditText
+        android:id="@+id/edit_username"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/input_background"
+        android:hint="输入你的用户名"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/edit_password"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cover"
+        android:autofillHints="username"
+        android:padding="5dp"
+        android:layout_marginTop="50dp"
+        android:drawableStart="@drawable/baseline_perm_identity_24" />
+
+    <EditText
+        android:id="@+id/edit_password"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/input_background"
+        android:hint="输入你的密码"
+        android:inputType="textPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_username"
+        android:autofillHints="password"
+        android:padding="5dp"
+        android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/baseline_password_24" />
+
+    <EditText
+        android:id="@+id/edit_email"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:background="@drawable/input_background"
+        android:hint="输入你的邮箱"
+        android:inputType="textEmailAddress"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/send_code_button"
+        app:layout_constraintTop_toBottomOf="@+id/edit_password"
+        android:autofillHints="emailAddress"
+        android:padding="5dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:drawableStart="@drawable/baseline_email_24" />
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toRightOf="@+id/edit_email"
+        app:layout_constraintTop_toBottomOf="@+id/edit_password"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="发送验证码"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_circle"
+        android:id="@+id/send_code_button"
+        app:layout_constraintHorizontal_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/edit_verification_code"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/input_background"
+        android:hint="输入邮箱验证码"
+        android:inputType="number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_email"
+        android:autofillHints="verification code"
+        android:padding="5dp"
+        android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/baseline_code_24" />
+
+    <Button
+        android:id="@+id/go_back_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:text="返回"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/register_button"
+        app:layout_constraintTop_toBottomOf="@+id/edit_verification_code"
+        android:background="@drawable/button_circle" />
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:text="注册"
+        app:layout_constraintLeft_toRightOf="@+id/go_back_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_verification_code"
+        android:background="@drawable/button_circle">
+
+    </Button>
+</androidx.constraintlayout.widget.ConstraintLayout>
