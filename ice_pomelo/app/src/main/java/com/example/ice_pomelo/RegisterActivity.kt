@@ -26,15 +26,15 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel.sendCodeResponseLiveData.observe(this) {
-            if (it.isSuccess) {
-                "发送成功".showToast()
-            } else {
-                val result = it.getOrNull()
-                if (result != null) {
-                    result.base.msg.showToast()
+            val result = it.getOrNull()
+            if (result != null) {
+                if (it.isSuccess) {
+                    "发送成功".showToast()
                 } else {
-                    it.exceptionOrNull()?.printStackTrace()
+                    result.base.msg.showToast()
                 }
+            } else {
+                it.exceptionOrNull()?.printStackTrace()
             }
         }
 

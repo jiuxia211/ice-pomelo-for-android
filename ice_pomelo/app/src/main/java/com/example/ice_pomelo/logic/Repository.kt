@@ -3,6 +3,8 @@ package com.example.ice_pomelo.logic
 import android.util.Log
 import androidx.lifecycle.liveData
 import com.example.ice_pomelo.logic.dao.LoginDao
+import com.example.ice_pomelo.logic.dao.TokenDao
+import com.example.ice_pomelo.logic.dao.UidDao
 import com.example.ice_pomelo.logic.model.LoginModel
 import com.example.ice_pomelo.logic.network.IcePomeloNetwork
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +15,18 @@ object Repository {
     fun getSavedLoginModel() = LoginDao.getSavedLoginModel()
 
     fun isLoginModelSaved() = LoginDao.isLoginModelSaved()
+
+    fun saveToken(token: String) = TokenDao.saveToken(token)
+
+    fun getSavedToken() = TokenDao.getSavedToken()
+
+    fun isTokenSaved() = TokenDao.isTokenSaved()
+
+    fun saveUid(uid: String) = UidDao.saveUid(uid)
+
+    fun getSavedUid() = UidDao.getSavedUid()
+
+    fun isSavedUid() = UidDao.isUidSaved()
     fun login(username: String, password: String) = liveData(Dispatchers.IO) {
         val result = try {
             val loginResponse = IcePomeloNetwork.login(username, password)
@@ -59,6 +73,21 @@ object Repository {
                 Result.success(sendCodeResponse)
             } else {
                 Result.failure(RuntimeException("err msg: ${sendCodeResponse.base.msg}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+        emit(result)
+    }
+
+    fun getUserInfo(uid: String, token: String) = liveData(Dispatchers.IO) {
+        val result = try {
+            val getUserInfoResponse = IcePomeloNetwork.getUserInfo(uid, token)
+            Log.d("network", getUserInfoResponse.toString())
+            if (getUserInfoResponse.base.code == 10000) {
+                Result.success(getUserInfoResponse)
+            } else {
+                Result.failure(RuntimeException("err msg: ${getUserInfoResponse.base.msg}"))
             }
         } catch (e: Exception) {
             Result.failure(e)

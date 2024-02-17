@@ -14,7 +14,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var loginModel: LoginModel
-    private val viewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(this)[LoginViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,28 +23,28 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         // 自动登录判断
         // 不自动登录的情况:1.初次登录，未保存LoginModel 2. 从MainActivity返回，autoLogin为false
-//        if (Repository.isLoginModelSaved()) {
-//            loginModel = Repository.getSavedLoginModel()
-//            if (loginModel.autoLogin) {
-//                viewModel.login(loginModel.username, loginModel.password)
-//            }
-//        }
+        if (Repository.isLoginModelSaved()) {
+            loginModel = Repository.getSavedLoginModel()
+            if (loginModel.autoLogin) {
+                viewModel.login(loginModel.username, loginModel.password)
+            }
+        }
 
         viewModel.loginResponseLiveData.observe(this) {
-            if (it.isSuccess) {
-                Repository.saveLoginModel(loginModel)
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                val result = it.getOrNull()
-                if (result != null) {
-                    result.base.msg.showToast()
+            val result = it.getOrNull()
+            if (result != null) {
+                if (it.isSuccess) {
+                    Repository.saveLoginModel(loginModel)
+                    Repository.saveToken(result.token)
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 } else {
-                    it.exceptionOrNull()?.printStackTrace()
+                    result.base.msg.showToast()
                 }
+            } else {
+                it.exceptionOrNull()?.printStackTrace()
             }
-
         }
 
         binding.loginButton.setOnClickListener {

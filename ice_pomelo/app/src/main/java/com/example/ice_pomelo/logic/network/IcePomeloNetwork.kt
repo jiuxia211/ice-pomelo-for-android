@@ -22,6 +22,9 @@ object IcePomeloNetwork {
 
     suspend fun sendCode(email: String) = userService.sendCode(email).await()
 
+    suspend fun getUserInfo(uid: String, token: String) =
+        userService.getUserInfo(uid, token).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

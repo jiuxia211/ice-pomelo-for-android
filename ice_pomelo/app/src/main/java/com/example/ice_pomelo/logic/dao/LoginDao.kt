@@ -22,4 +22,6 @@ object LoginDao {
         val loginModelJson = sharedPreferences().getString("loginModel", "")
         return Gson().fromJson(loginModelJson, LoginModel::class.java)
     }
+
+
 }
